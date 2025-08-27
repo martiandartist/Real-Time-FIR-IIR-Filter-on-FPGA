@@ -16,6 +16,11 @@ title('Low-Pass FIR Filter Response');
 %% Create Filter Object for HDL Coder
 firFilt = dsp.FIRFilter('Numerator', h);
 
+% Optional: Set input/output fixed-point types
+% firFilt.FullPrecisionOverride = false;
+% firFilt.OutputDataType = 'Custom';
+% firFilt.CustomOutputDataType = numerictype(1, 16, 10);
+
 %% Generate HDL Code (Verilog or VHDL)
 generatehdl(firFilt, ...
     'Name', 'LowPassFIR', ...
@@ -23,3 +28,7 @@ generatehdl(firFilt, ...
     'GenerateHDLTestbench', true, ...
     'OptimizeForHDL', true);
 
+% This will generate:
+% - LowPassFIR.v          (your Verilog filter)
+% - LowPassFIR_tb.v       (testbench)
+% - hdl_prj/              (support files)
